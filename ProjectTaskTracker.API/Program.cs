@@ -1,4 +1,10 @@
 
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
+using DataAccess;
+using Microsoft.EntityFrameworkCore;
+using ProjectTaskTracker.API.Services;
+
 namespace ProjectTaskTracker.API
 {
     public class Program
@@ -13,6 +19,13 @@ namespace ProjectTaskTracker.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString:DefaultConnection")));
+
+            builder.Services.AddScoped<IAuthService, AuthService>();
+
+
 
             var app = builder.Build();
 
