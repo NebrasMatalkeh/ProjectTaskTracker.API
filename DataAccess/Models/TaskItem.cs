@@ -1,4 +1,5 @@
-﻿namespace ProjectTaskTracker.API.Models
+﻿
+namespace ProjectTaskTracker.API.Models
 {
     public enum TaskStatus { New , InProgress , Completed}
     public class TaskItem
@@ -9,8 +10,8 @@
         public TaskStatus Status { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
-        public int? AssignedDeveloperId { get; set; }
-        public User AssignedDeveloper { get; set; }
-
+        public int? AssignedUserId { get; set; }
+        public User AssignedUser { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

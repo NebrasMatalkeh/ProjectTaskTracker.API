@@ -9,7 +9,7 @@ namespace BusinessLogic.Interfaces
 {
    public interface IUserService
     {
-        Task<string> Authenticate(string email, string password);
+       
         Task<IEnumerable<UserDTO>> GetAllDevelopers();
 
     }

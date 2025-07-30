@@ -33,7 +33,7 @@ namespace BusinessLogic.Services
                 throw new UnauthorizedAccessException("Invalid credentials");
 
             var token = GenerateJWTToken(user);
-            return new AuthResponseDTO { Token = token, Role = user.Role };
+            return new AuthResponseDTO { Token = token, Role = user.Role.ToString() };
         }
 
         public async Task<UserDTO> RegisterDeveloper(RegisterDTO registerDTO, int managerId)
@@ -85,4 +85,4 @@ namespace BusinessLogic.Services
 
     }
 }
-}
+
