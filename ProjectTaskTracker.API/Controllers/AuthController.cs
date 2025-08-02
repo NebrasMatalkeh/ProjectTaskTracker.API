@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace ProjectTaskTracker.API.Controllers
 {
     [ApiController]
-    [Route("")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;

@@ -24,7 +24,7 @@ namespace ProjectTaskTracker.API.Services
                     Id = u.Id,
                     FullName = u.FullName,
                     Email = u.Email,
-                    Role = u.Role
+                    Role = u.Role.ToString()
                 })
                 .ToListAsync();
         }

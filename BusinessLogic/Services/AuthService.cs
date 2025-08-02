@@ -47,6 +47,7 @@ namespace BusinessLogic.Services
                 Email = registerDTO.Email,
                 PasswordHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(registerDTO.Password)),
                 Role = UserRole.Developer
+
             };
 
             _context.Users.Add(user);
@@ -57,7 +58,7 @@ namespace BusinessLogic.Services
                 Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
-                Role = user.Role
+                Role = user.Role.ToString()
             };
         }
 

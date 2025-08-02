@@ -39,8 +39,8 @@ namespace ProjectTaskTracker.API.Services
                 Title = task.Title,
                 Description = task.Description,
                 CreationDate = task.CreationDate,
-                Status = (System.Threading.Tasks.TaskStatus)task.Status,
-                ProjectName = project.Name
+                Status = task.Status.ToString(),
+                ProjectId = project.Id
             };
         }
 
@@ -54,6 +54,7 @@ namespace ProjectTaskTracker.API.Services
                 throw new ArgumentException("Invalid developer");
 
             task.AssignedUserId = assignDTO.DeveloperId;
+            task.Status = TaskStatus.InProgress;
             await _context.SaveChangesAsync();
 
             return new TaskDTO
@@ -62,9 +63,9 @@ namespace ProjectTaskTracker.API.Services
                 Title = task.Title,
                 Description = task.Description,
                 CreationDate = task.CreationDate,
-                Status = (System.Threading.Tasks.TaskStatus)task.Status,
+                Status =task.Status.ToString(),
                 AssignedDeveloper = developer.FullName,
-                ProjectName = task.Project.Name
+                ProjectId = task.ProjectId,
             };
         }
 
@@ -83,9 +84,9 @@ namespace ProjectTaskTracker.API.Services
                 Title = task.Title,
                 Description = task.Description,
                 CreationDate = task.CreationDate,
-                Status = (System.Threading.Tasks.TaskStatus)task.Status,
+                Status = task.Status.ToString(),
                 AssignedDeveloper = task.AssignedUser?.FullName,
-                ProjectName = task.Project.Name
+                ProjectId = task.Project.Id
             };
         }
 
@@ -99,8 +100,8 @@ namespace ProjectTaskTracker.API.Services
                     Title = t.Title,
                     Description = t.Description,
                     CreationDate = t.CreationDate,
-                    Status = (System.Threading.Tasks.TaskStatus)t.Status,
-                    ProjectName = t.Project.Name
+                    Status = t.Status.ToString(),
+                    ProjectId = t.Project.Id    
                 })
                 .ToListAsync();
         }
@@ -115,9 +116,9 @@ namespace ProjectTaskTracker.API.Services
                     Title = t.Title,
                     Description = t.Description,
                     CreationDate = t.CreationDate,
-                    Status = (System.Threading.Tasks.TaskStatus)t.Status,
+                    Status = t.Status.ToString(),
                     AssignedDeveloper = t.AssignedUser.FullName,
-                    ProjectName = t.Project.Name
+                    ProjectId = t.Project.Id    
                 })
                 .ToListAsync();
         }

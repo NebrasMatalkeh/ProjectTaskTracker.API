@@ -1,7 +1,16 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace ProjectTaskTracker.API.Models
 {
-    public enum TaskStatus { New , InProgress , Completed}
+    public enum TaskStatus {
+        [Display(Name = "New")]
+        New=0,
+        [Display(Name = "In Progress")]
+        InProgress=1,
+        [Display(Name = "Completed")]
+        Completed=2,
+    }
     public class TaskItem
     {
         public int Id { get; set; }

@@ -6,9 +6,9 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-        public TaskStatus Status { get; set; }
+        public string Status { get; set; }
         public string AssignedDeveloper { get; set; }
-        public string ProjectName { get; set; }
+        public int ProjectId { get; set; }
     }
     public class TaskCreateDTO
     {
