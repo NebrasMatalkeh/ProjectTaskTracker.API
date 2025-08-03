@@ -81,12 +81,9 @@ namespace ProjectTaskTracker.API.Services
             return new TaskDTO
             {
                 Id = task.Id,
-                Title = task.Title,
-                Description = task.Description,
-                CreationDate = task.CreationDate,
+               
                 Status = task.Status.ToString(),
-                AssignedDeveloper = task.AssignedUser?.FullName,
-                ProjectId = task.Project.Id
+               
             };
         }
 
