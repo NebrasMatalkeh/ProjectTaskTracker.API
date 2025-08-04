@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.RequestFeatures;
+using Microsoft.EntityFrameworkCore;
 using ProjectTaskTracker.API.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<MetaData>().HasNoKey();
+            //modelBuilder.Entity<TaskItem>()
+            //.Ignore(t => t.MetaData);
             modelBuilder.Entity<User>().HasData(
                 new User
                 {

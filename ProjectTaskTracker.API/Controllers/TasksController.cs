@@ -1,8 +1,10 @@
 ﻿using BusinessLogic.Interfaces;
+using DataAccess.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTaskTracker.API.DataObjects;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace ProjectTaskTracker.API.Controllers
 {
@@ -88,6 +90,14 @@ namespace ProjectTaskTracker.API.Controllers
         {
             var tasks = await _taskService.GetProjectTasks(projectId);
             return Ok(tasks);
+        }
+
+        [HttpGet("projectv2")]
+        public async Task<IActionResult> GetProjectTasksWithPagination( [FromQuery] TaskParameters taskParameters)
+        {
+            var pagedResult = await _taskService.GetProjectTasksWithPagination(taskParameters);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+            return Ok(pagedResult.tasks);
         }
     }
 }

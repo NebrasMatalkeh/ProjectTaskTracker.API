@@ -1,4 +1,5 @@
-﻿using ProjectTaskTracker.API.DataObjects;
+﻿using DataAccess.RequestFeatures;
+using ProjectTaskTracker.API.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace BusinessLogic.Interfaces
         Task<TaskDTO> AssignTask(TaskAssignDTO assignDTO, int managerId);
         Task<TaskDTO> UpdateTaskStatus(int taskId, TaskUpdateStatusDTO statusDTO, int developerId);
         Task<IEnumerable<TaskDTO>> GetDeveloperTasks(int developerId);
+      
         Task<IEnumerable<TaskDTO>> GetProjectTasks(int projectId);
+        Task<(IEnumerable<TaskDTO> tasks, MetaData metaData) > GetProjectTasksWithPagination( TaskParameters taskParameters );
     }
 }

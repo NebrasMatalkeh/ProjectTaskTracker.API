@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Interfaces;
 using DataAccess;
+using DataAccess.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using ProjectTaskTracker.API.DataObjects;
 using ProjectTaskTracker.API.Models;
@@ -102,7 +103,6 @@ namespace ProjectTaskTracker.API.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<IEnumerable<TaskDTO>> GetProjectTasks(int projectId)
         {
             return await _context.Tasks
@@ -119,5 +119,70 @@ namespace ProjectTaskTracker.API.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<(IEnumerable<TaskDTO> tasks, MetaData metaData)> GetProjectTasksWithPagination(TaskParameters taskParameters)
+        {
+
+
+            var query = _context.Tasks.AsQueryable();
+
+            
+            var totalCount = await query.CountAsync();
+
+            
+            var totalPages = (int)Math.Ceiling(totalCount / (double)taskParameters.PageSize);
+
+            
+            var tasks = await query
+                .Skip((taskParameters.PageNumber - 1) * taskParameters.PageSize) 
+                .Take(taskParameters.PageSize) 
+                .Select(t => new TaskDTO
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Description = t.Description,
+                    CreationDate = t.CreationDate,
+                    Status = t.Status.ToString(),
+                    AssignedDeveloper = t.AssignedUser.FullName,
+                    ProjectId = t.Project.Id
+                })
+                .ToListAsync();
+
+           
+            var metaData = new MetaData
+            {
+                CurrentPage = taskParameters.PageNumber,
+                PageSize = taskParameters.PageSize,
+                TotalCount = totalCount,
+                TotalPages = totalPages
+            };
+
+            return (tasks, metaData);
+        }
+        //    var tasksWithMataData = await _context.Tasks.
+        //        //..FindAsync( taskParameters);
+        //    var tasksDto = await _context.Tasks.Select(t => new TaskDTO
+
+        //    {
+        //        Id = t.Id,
+        //        Title = t.Title,
+        //        Description = t.Description,
+        //        CreationDate = t.CreationDate,
+        //        Status = t.Status.ToString(),
+        //        AssignedDeveloper = t.AssignedUser.FullName,
+        //        ProjectId = t.Project.Id
+        //    })
+        //    .ToListAsync();
+
+        //    return (tasks: tasksDto, metaData: tasksWithMataData.MetaData);
+
+
+        //var tasksWithMataData = await _context.Tasks
+        // .Where(t => t.ProjectId == projectId)
+
+
+        //return (tasks: tasksDto, metaData: tasksWithMataData.MetaData);
+
+
     }
-}
+    }

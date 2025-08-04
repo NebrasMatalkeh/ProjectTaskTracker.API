@@ -1,5 +1,7 @@
 ﻿
+using DataAccess.RequestFeatures;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectTaskTracker.API.Models
 {
@@ -22,5 +24,9 @@ namespace ProjectTaskTracker.API.Models
         public int? AssignedUserId { get; set; }
         public User AssignedUser { get; set; }
         public DateTime CreationDate { get; set; }
+
+        //[NotMapped]
+
+       // public MetaData MetaData { get; set; }
     }
 }
