@@ -1,4 +1,5 @@
 ﻿using DataAccess.RequestFeatures;
+using Microsoft.CodeAnalysis;
 using ProjectTaskTracker.API.DataObjects;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,8 @@ namespace BusinessLogic.Interfaces
       
         Task<IEnumerable<TaskDTO>> GetProjectTasks(int projectId);
         Task<(IEnumerable<TaskDTO> tasks, MetaData metaData) > GetProjectTasksWithPagination( TaskParameters taskParameters );
+        //Task<IEnumerable<TaskDTO>> GetTasksByProjectAsync(int projectId, string? status);
+        Task<IEnumerable<TaskDTO>> GetTasksByProjectAsync( int projectId , string? status);
+
     }
 }

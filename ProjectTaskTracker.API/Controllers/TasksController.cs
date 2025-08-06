@@ -93,11 +93,20 @@ namespace ProjectTaskTracker.API.Controllers
         }
 
         [HttpGet("projectv2")]
-        public async Task<IActionResult> GetProjectTasksWithPagination( [FromQuery] TaskParameters taskParameters)
+        public async Task<IActionResult> GetProjectTasksWithPagination([FromQuery] TaskParameters taskParameters)
         {
             var pagedResult = await _taskService.GetProjectTasksWithPagination(taskParameters);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
             return Ok(pagedResult.tasks);
+        }
+
+        [HttpGet("status")]
+       
+        
+        public async Task<IActionResult> GetTasksByProjectAsync( int projectId, string? status)
+        {
+            var tasks = await _taskService.GetTasksByProjectAsync( projectId, status);
+            return Ok(tasks);
         }
     }
 }

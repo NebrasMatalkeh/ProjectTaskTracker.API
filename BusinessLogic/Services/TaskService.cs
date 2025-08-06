@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Interfaces;
+using BusinessLogic.Repository;
 using DataAccess;
 using DataAccess.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
@@ -184,5 +185,36 @@ namespace ProjectTaskTracker.API.Services
         //return (tasks: tasksDto, metaData: tasksWithMataData.MetaData);
 
 
+        
+
+       public async Task<IEnumerable<TaskDTO>> GetTasksByProjectAsync(int projectId, string? status)
+        {
+            var query = _context.Tasks.AsQueryable();
+            if (status != null)
+            {
+                if (Enum.TryParse<TaskStatus>(status, true, out var taskStatus))
+                {
+                    query = query.Where(t => t.Status == taskStatus);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid task status");
+                }
+            }
+            return await query
+                .Where(t => t.ProjectId == projectId)
+                .Select(t => new TaskDTO
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Description = t.Description,
+                    CreationDate = t.CreationDate,
+                    Status = t.Status.ToString(),
+                    AssignedDeveloper = t.AssignedUser.FullName,
+                    ProjectId = t.Project.Id    
+                })
+                .ToListAsync();
+        }
     }
-    }
+
+}

@@ -11,5 +11,6 @@ namespace BusinessLogic.Interfaces
     {
         Task<ProjectDTO> CreateProject(ProjectCreateDTO projectDTO, int managerId);
         Task<IEnumerable<ProjectDTO>> GetAllProjects();
+        Task<IEnumerable<ProjectDTO>>GetProjectsAsync(string? searchTerm);
     }
 }

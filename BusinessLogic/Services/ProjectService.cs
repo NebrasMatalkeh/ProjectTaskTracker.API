@@ -45,5 +45,23 @@ namespace ProjectTaskTracker.API.Services
                 })
                 .ToListAsync();
         }
+        
+
+        public async Task<IEnumerable<ProjectDTO>> GetProjectsAsync(string? searchTerm)
+        {
+            var query = _context.Projects.AsQueryable();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm));
+            }
+            return await query
+                .Select(p => new ProjectDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CreationDate = p.CreationDate
+                })
+                .ToListAsync();
+        }
     }
 }

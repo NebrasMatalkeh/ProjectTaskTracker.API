@@ -33,6 +33,14 @@ namespace ProjectTaskTracker.API.Controllers
             var projects = await _projectService.GetAllProjects();
             return Ok(projects);
         }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IActionResult> GetProjectsAsync( string? searchTerm)
+        {
+         var projects = await _projectService.GetProjectsAsync(searchTerm);
+          return Ok(projects);
+        }
     }
 }
 
