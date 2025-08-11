@@ -60,6 +60,12 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
@@ -95,6 +101,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,6 +121,7 @@ namespace DataAccess.Migrations
                             Id = 1,
                             Email = "admain@23.com",
                             FullName = "Admain Manager",
+                            IsActive = true,
                             PasswordHash = "TWFuYWdlckAzNDU=",
                             Role = 0
                         });

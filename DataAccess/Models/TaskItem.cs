@@ -5,6 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectTaskTracker.API.Models
 {
+
+    public enum TaskPriority
+    {
+        Low,
+        Medium,
+        High
+    }
+
     public enum TaskStatus {
         [Display(Name = "New")]
         New=0,
@@ -24,9 +32,11 @@ namespace ProjectTaskTracker.API.Models
         public int? AssignedUserId { get; set; }
         public User AssignedUser { get; set; }
         public DateTime CreationDate { get; set; }
+        public TaskPriority Priority { get; set; }  
+        public DateTime? DueDate { get; set; }    
 
         //[NotMapped]
 
-       // public MetaData MetaData { get; set; }
+        // public MetaData MetaData { get; set; }
     }
 }

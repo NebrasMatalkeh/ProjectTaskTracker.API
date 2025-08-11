@@ -34,7 +34,8 @@ namespace DataAccess.Migrations
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +53,9 @@ namespace DataAccess.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     AssignedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,8 +75,8 @@ namespace DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "FullName", "PasswordHash", "Role" },
-                values: new object[] { 1, "admain@23.com", "Admain Manager", "TWFuYWdlckAzNDU=", 0 });
+                columns: new[] { "Id", "Email", "FullName", "IsActive", "PasswordHash", "Role" },
+                values: new object[] { 1, "admain@23.com", "Admain Manager", true, "TWFuYWdlckAzNDU=", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_AssignedUserId",

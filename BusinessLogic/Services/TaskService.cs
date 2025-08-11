@@ -29,7 +29,10 @@ namespace ProjectTaskTracker.API.Services
                 Description = taskDTO.Description,
                 CreationDate = DateTime.UtcNow,
                 Status = TaskStatus.New,
-                ProjectId = taskDTO.ProjectId
+                ProjectId = taskDTO.ProjectId,
+                Priority=taskDTO.Priority,
+                DueDate = taskDTO.DueDate
+
             };
 
             _context.Tasks.Add(task);

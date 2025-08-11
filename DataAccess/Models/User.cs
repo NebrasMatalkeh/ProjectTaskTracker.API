@@ -17,6 +17,7 @@ namespace ProjectTaskTracker.API.Models
         public string PasswordHash { get; set; }
         public UserRole Role { get; set; }
         public List<TaskItem> Tasks { get; set; }
+        public bool IsActive { get; set; } = true;
 
     }
 }
