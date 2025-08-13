@@ -3,6 +3,7 @@ using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectTaskTracker.API.Interfase;
 using ProjectTaskTracker.API.Middleware;
+using ProjectTaskTracker.API.Models;
 using ProjectTaskTracker.API.service;
 using ProjectTaskTracker.API.Services;
 using System.Text;
@@ -32,11 +34,15 @@ namespace ProjectTaskTracker.API
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            
+
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ITaskService, TaskService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<ICustomAuthService, CustomAuthService>();
+            builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

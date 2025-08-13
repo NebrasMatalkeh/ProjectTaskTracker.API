@@ -16,10 +16,12 @@ namespace ProjectTaskTracker.API.Models
     public enum TaskStatus {
         [Display(Name = "New")]
         New=0,
+
         [Display(Name = "In Progress")]
         InProgress=1,
+
         [Display(Name = "Completed")]
-        Completed=2,
+        Completed=2
     }
     public class TaskItem
     {
@@ -33,7 +35,8 @@ namespace ProjectTaskTracker.API.Models
         public User AssignedUser { get; set; }
         public DateTime CreationDate { get; set; }
         public TaskPriority Priority { get; set; }  
-        public DateTime? DueDate { get; set; }    
+        public DateTime? DueDate { get; set; }
+      
 
         //[NotMapped]
 

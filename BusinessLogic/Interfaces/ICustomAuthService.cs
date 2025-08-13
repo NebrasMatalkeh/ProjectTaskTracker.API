@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface IAuthService
+   public interface ICustomAuthService
     {
-        Task<AuthResponseDTO> Login(LoginDTO loginDTO);
-       
-        Task<UserDTO> RegisterDeveloper(RegisterDTO registerDTO, int managerId);
+        Task<AuthResponseDTO> LoginAsync(LoginDTO loginDTO);
     }
 }

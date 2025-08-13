@@ -1,11 +1,7 @@
-﻿using DataAccess.RequestFeatures;
+﻿using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using ProjectTaskTracker.API.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess
 {
@@ -14,10 +10,10 @@ namespace DataAccess
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<TaskItem>Tasks { get; set; }
+        public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
