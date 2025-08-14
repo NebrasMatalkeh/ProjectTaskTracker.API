@@ -51,39 +51,6 @@ namespace ProjectTaskTracker.API.Controllers
             });
 
 
-            //var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            //var user = await _context.Users
-            //    .Where(u => u.Id == userId && u.IsActive)
-            //    .Select(u => new UserDTO
-            //    {
-            //        Id = u.Id,
-            //        FullName = u.FullName,
-            //        Email = u.Email,
-            //        Role = u.Role.ToString()
-            //    })
-            //    .FirstOrDefaultAsync();
-            //if (user == null)
-            //    return NotFound();
-            //return Ok(user);
-
-
-
-
-            //var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            //var user = await _context.Users.FindAsync(userId);
-
-
-            //if (user == null || !user.IsActive)
-            //    return NotFound();
-
-            //return new UserDTO
-            //{
-            //    Id = user.Id,
-            //    FullName = user.FullName,
-            //    Email = user.Email,
-            //    Role = user.Role.ToString()
-
-            //};
 
 
         }
@@ -112,22 +79,6 @@ namespace ProjectTaskTracker.API.Controllers
                 Email = user.Email,
                 Role = user.Role.ToString()
             });
-
-
-
-
-
-
-
-
-            //// Assuming you want to update the current user's profile based on their claims
-            //var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            //var user = await _context.Users.FindAsync(userId);
-            //if (user == null || !user.IsActive)
-            //    return NotFound();
-            //user.FullName = dto.FullName;
-            //await _context.SaveChangesAsync();
-            //return NoContent();
 
         }
         [Authorize(Roles = "Manager")]

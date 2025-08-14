@@ -9,8 +9,8 @@ namespace BusinessLogic.Interfaces
 {
     public interface IAuthService
     {
-        Task<AuthResponseDTO> Login(LoginDTO loginDTO);
        
+        Task<AuthResponseDTO> LoginAsync(LoginDTO loginDTO);
         Task<UserDTO> RegisterDeveloper(RegisterDTO registerDTO, int managerId);
     }
 }

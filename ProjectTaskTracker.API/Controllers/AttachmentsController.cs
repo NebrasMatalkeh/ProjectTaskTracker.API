@@ -35,20 +35,17 @@ namespace ProjectTaskTracker.API.Controllers
             {
                 return NotFound("Task not found.");
             }
-            //var allowedExtensions = _config["AllowedExtensions"].Split(',');
-            //var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+           
             var allowedExtensions = _config["FileStorage:AllowedExtensions"].Split(',');
             var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
-            //var uploadPath = _config["FileStorage:UploadPath"];
-            //var allowedExtensions = _config["FileStorage:AllowedExtensions"].Split(',');
-
+            
             if (string.IsNullOrEmpty(fileExtension))
                 return BadRequest("File has no extension");
 
             if (!allowedExtensions.Contains(fileExtension))
                 return BadRequest("File type not allowed");
 
-            // var uploadFolder = Path.Combine(_environment.ContentRootPath,_config["UploadFolder"]);
+          
             var uploadFolder = _config["FileStorage:UploadFolder"] ?? "Uploads";
             if (string.IsNullOrEmpty(uploadFolder))
             {

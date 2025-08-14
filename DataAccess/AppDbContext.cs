@@ -27,7 +27,8 @@ namespace DataAccess
                     FullName = "Admain Manager",
                     Email = "admain@23.com",
                     PasswordHash = Convert.ToBase64String(Encoding.UTF8.GetBytes("Manager@345")),
-
+                    Role = UserRole.Manager,
+                    IsActive = true
                 });
         }
 

@@ -30,7 +30,7 @@ namespace ProjectTaskTracker.API.Controllers
                 var task = await _taskService.CreateTask(taskDTO, managerId);
                 return Ok(task);
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -46,14 +46,11 @@ namespace ProjectTaskTracker.API.Controllers
                 var task = await _taskService.AssignTask(assignDTO, managerId);
                 return Ok(task);
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
         }
 
         [Authorize(Roles = "Developer")]
@@ -66,14 +63,11 @@ namespace ProjectTaskTracker.API.Controllers
                 var task = await _taskService.UpdateTaskStatus(taskId, statusDTO, developerId);
                 return Ok(task);
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
+            
         }
 
         [Authorize(Roles = "Developer")]
@@ -102,7 +96,6 @@ namespace ProjectTaskTracker.API.Controllers
 
         [HttpGet("status")]
        
-        
         public async Task<IActionResult> GetTasksByProjectAsync( int projectId, string? status)
         {
             var tasks = await _taskService.GetTasksByProjectAsync( projectId, status);

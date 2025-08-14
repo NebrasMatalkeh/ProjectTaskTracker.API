@@ -39,7 +39,7 @@ namespace ProjectTaskTracker.API
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ITaskService, TaskService>();
             builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<ICustomAuthService, CustomAuthService>();
+           
             builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 

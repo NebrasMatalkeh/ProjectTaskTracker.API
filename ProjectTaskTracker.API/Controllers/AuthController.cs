@@ -18,98 +18,31 @@ namespace ProjectTaskTracker.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-       private readonly ICustomAuthService _customAuthService;
-        //private readonly UserManager<User> _userManager;
-        //private readonly SignInManager<User> _signInManager;
+      
+      
 
-        public AuthController(IAuthService authService , ICustomAuthService customAuthService)
-            //UserManager<User> userManager,
-            //SignInManager<User> signInManager)
+        public AuthController(IAuthService authService )
+           
         {
             _authService = authService;
-            _customAuthService = customAuthService;
-            //_userManager = userManager;
-            //_signInManager = signInManager;
-
+           
+         
         }
-           
-
-           
-        
-
+         
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
             try
             {
-                var response = await _customAuthService.LoginAsync(loginDTO);
+                var response = await _authService.LoginAsync(loginDTO);
                 return Ok(response);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex)
             {
                 return Unauthorized(ex.Message);
             }
 
-            //var user = await _userManager.FindByEmailAsync(loginDTO.Email);
-
-            //if (user == null || !user.IsActive)
-            //    return Unauthorized("Invalid email or password");
-
-            //var result = await _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, false);
-
-            //if (!result.Succeeded)
-            //    return Unauthorized("Invalid email or password");
-            //var claims = new List<Claim>
-            //    {
-            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            //    new Claim(ClaimTypes.Email, user.Email),
-            //    new Claim(ClaimTypes.Name, user.FullName),
-            //    new Claim(ClaimTypes.Role, user.Role.ToString())
-            //};
-            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ADFR34cDGwe48KccbfQLTM34BSFY64GF")); 
-            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var token = new JwtSecurityToken(
-            //    issuer: "TaskTracker65",
-            //    audience: "TaskTracker87",
-            //    claims: claims,
-            //    expires: DateTime.UtcNow.AddHours(1),
-            //    signingCredentials: creds
-            //);
-            //var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            //return Ok(new AuthResponseDTO
-            //{
-            //    Token = tokenString,
-            //    Email = user.Email,
-            //    FullName = user.FullName,
-            //    Role = user.Role.ToString()
-            //});
-
-
-
-
-
-
-
-
-
-
-            //return new AuthResponseDTO
-            //{
-
-
-            //    Token = new JwtSecurityTokenHandler().WriteToken(token),
-            //    Email = user.Email,
-            //    FullName = user.FullName
-            //};
-            //try
-            //{
-            //    var response = await _authService.Login(loginDTO);
-            //    return Ok(response);
-            //}
-            //catch (UnauthorizedAccessException ex)
-            //{
-            //    return Unauthorized(ex.Message);
-            //}
+          
         }
 
         [Authorize(Roles = "Manager")]
@@ -122,7 +55,7 @@ namespace ProjectTaskTracker.API.Controllers
                 var developer = await _authService.RegisterDeveloper(registerDTO, managerId);
                 return Ok(developer);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

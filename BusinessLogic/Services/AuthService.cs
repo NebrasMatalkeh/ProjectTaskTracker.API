@@ -26,15 +26,54 @@ namespace BusinessLogic.Services
             _config = config;
         }
 
-        public async Task<AuthResponseDTO> Login(LoginDTO loginDTO)
+        public async Task<AuthResponseDTO> LoginAsync(LoginDTO loginDTO)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
-            if (user == null || Convert.ToBase64String(Encoding.UTF8.GetBytes(loginDTO.Password)) != user.PasswordHash)
-                throw new UnauthorizedAccessException("Invalid credentials");
+            if (user == null || !user.IsActive)
+            {
+                throw new UnauthorizedAccessException("Invalid email or password");
+            }
 
-            var token = GenerateJWTToken(user);
-            return new AuthResponseDTO { Token = token, Role = user.Role.ToString() };
+
+            var passwordMatch = user.PasswordHash == Convert.ToBase64String(Encoding.UTF8.GetBytes(loginDTO.Password));
+            if (!passwordMatch)
+            {
+                throw new UnauthorizedAccessException("Invalid email or password");
+            }
+
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FullName),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+
+            };
+
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: creds
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new AuthResponseDTO
+            {
+                Token = tokenString,
+                Email = user.Email,
+                FullName = user.FullName,
+                Role = user.Role.ToString()
+            };
         }
+    
 
         public async Task<UserDTO> RegisterDeveloper(RegisterDTO registerDTO, int managerId)
         {
@@ -46,7 +85,8 @@ namespace BusinessLogic.Services
                 FullName = registerDTO.FullName,
                 Email = registerDTO.Email,
                 PasswordHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(registerDTO.Password)),
-                Role = UserRole.Developer
+                Role = UserRole.Developer,
+                IsActive = true,
 
             };
 
