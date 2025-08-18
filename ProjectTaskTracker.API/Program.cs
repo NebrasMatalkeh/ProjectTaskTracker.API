@@ -2,6 +2,7 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,8 +40,13 @@ namespace ProjectTaskTracker.API
             builder.Services.AddScoped<IProjectService, ProjectService>();
             builder.Services.AddScoped<ITaskService, TaskService>();
             builder.Services.AddScoped<IUserService, UserService>();
-           
             builder.Services.AddScoped<IDashboardService, DashboardService>();
+           // builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings" ));
+          
+            builder.Services.AddHostedService<EmailBackgroundService>();
+            
 
 
 

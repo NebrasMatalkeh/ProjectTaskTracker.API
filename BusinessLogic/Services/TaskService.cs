@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Repository;
+using BusinessLogic.Services;
 using DataAccess;
+using DataAccess.Models;
 using DataAccess.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using ProjectTaskTracker.API.DataObjects;
@@ -61,6 +63,13 @@ namespace ProjectTaskTracker.API.Services
             task.AssignedUserId = assignDTO.DeveloperId;
             task.Status = TaskStatus.InProgress;
             await _context.SaveChangesAsync();
+           NotificationQueue.emails.Enqueue(new EmailNotification
+            {
+                To = developer.Email,
+                Subject = "Task Assigned",
+                Body = $"You have been assigned a new task: {task.Title}. Please check your dashboard for details.",
+                
+            });
 
             return new TaskDTO
             {
@@ -72,6 +81,7 @@ namespace ProjectTaskTracker.API.Services
                 AssignedDeveloper = developer.FullName,
                 ProjectId = task.ProjectId,
             };
+           
         }
 
         public async Task<TaskDTO> UpdateTaskStatus(int taskId, TaskUpdateStatusDTO statusDTO, int developerId)

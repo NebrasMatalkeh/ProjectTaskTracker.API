@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace ProjectTaskTracker.API.Controllers
 {
-    [Authorize]
+   [Authorize]
     [ApiController]
     [Route("api/tasks")]
     public class TasksController : ControllerBase
